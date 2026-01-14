@@ -124,6 +124,26 @@ export const PACKAGES: Package[] = [
     image:
       'https://images.unsplash.com/photo-1542901031-158223c34302?q=80&w=800&auto=format&fit=crop',
   },
+  {
+    id: 'p3',
+    name: 'Economic Umrah',
+    duration: '7 Days',
+    price: 2500,
+    type: 'Umrah',
+    includes: ['4* Hotel Makkah', 'Group Transport', 'Visa Processing', 'Ziyarat'],
+    image:
+      'https://images.unsplash.com/photo-1565552136439-b21919869911?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'p4',
+    name: 'History of Madinah',
+    duration: '5 Days',
+    price: 3200,
+    type: 'Cultural',
+    includes: ['5* Boutique Hotel', 'Expert Historian', 'Museum Entry', 'Traditional Meals'],
+    image:
+      'https://images.unsplash.com/photo-1591848415714-368297b6a121?q=80&w=800&auto=format&fit=crop',
+  },
 ]
 
 export const TESTIMONIALS: Testimonial[] = [

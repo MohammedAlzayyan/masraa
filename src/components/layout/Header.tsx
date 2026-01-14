@@ -14,6 +14,11 @@ export default function Header() {
   const { language, setLanguage, t } = useLanguage()
 
   useEffect(() => {
+    // Check initial scroll position
+    if (window.scrollY > 50) {
+      setIsScrolled(true)
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
@@ -26,13 +31,13 @@ export default function Header() {
     { name: t?.nav?.about || 'من نحن', page: 'about' as const, href: '/about' },
     { name: t?.nav?.services || 'الخدمات', page: 'services' as const, href: '/services' },
     { name: t?.nav?.hotels || 'الفنادق', page: 'hotels' as const, href: '/hotels' },
-    { name: t?.nav?.packages || 'الباقات', page: 'home' as const, href: '/#packages' },
-    { name: t?.nav?.contact || 'تواصل معنا', page: 'home' as const, href: '/#contact' },
+    { name: t?.nav?.packages || 'الباقات', page: 'packages' as const, href: '/packages' },
+    { name: t?.nav?.contact || 'تواصل معنا', page: 'contact' as const, href: '/contact' },
   ]
 
   const handleNavLinkClick = (
     e: React.MouseEvent,
-    page: 'home' | 'about' | 'services' | 'hotels',
+    page: 'home' | 'about' | 'services' | 'hotels' | 'contact' | 'packages',
     href: string,
   ) => {
     // للروابط الداخلية (hash links)
@@ -74,14 +79,24 @@ export default function Header() {
   }
 
   const currentPage =
-    pathname === '/' ? 'home' : (pathname.slice(1) as 'about' | 'services' | 'hotels')
+    pathname === '/'
+      ? 'home'
+      : (pathname.slice(1) as 'about' | 'services' | 'hotels' | 'contact' | 'packages')
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
-        isScrolled || currentPage !== 'home'
+        isScrolled
           ? 'bg-brand-burgundy/95 backdrop-blur-md py-3 shadow-lg'
-          : 'bg-transparent py-6'
+          : currentPage === 'about' ||
+              currentPage === 'services' ||
+              currentPage === 'hotels' ||
+              currentPage === 'contact' ||
+              currentPage === 'packages'
+            ? 'bg-transparent py-6'
+            : currentPage !== 'home'
+              ? 'bg-brand-burgundy/95 backdrop-blur-md py-3 shadow-lg'
+              : 'bg-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">

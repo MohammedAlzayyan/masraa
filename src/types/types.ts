@@ -21,7 +21,7 @@ export interface Package {
   duration: string
   price: number
   includes: string[]
-  type: 'Hajj' | 'Umrah'
+  type: 'Hajj' | 'Umrah' | 'Cultural'
   image: string
 }
 

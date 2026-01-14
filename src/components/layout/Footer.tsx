@@ -12,7 +12,7 @@ export default function Footer() {
 
   const handleLink = (
     e: React.MouseEvent,
-    page: 'home' | 'about' | 'services' | 'hotels',
+    page: 'home' | 'about' | 'services' | 'hotels' | 'packages' | 'contact',
     href: string,
   ) => {
     if (href.startsWith('/#')) {
@@ -36,6 +36,7 @@ export default function Footer() {
         }
       }
     } else {
+      // للتنقل المباشر للصفحات
       router.push(href)
     }
   }
@@ -85,8 +86,8 @@ export default function Footer() {
             <ul className="space-y-5 text-brand-beige/70 font-bold">
               <li>
                 <Link
-                  href="/#services"
-                  onClick={(e) => handleLink(e, 'services', '/#services')}
+                  href="/services"
+                  onClick={(e) => handleLink(e, 'services', '/services')}
                   className="hover:text-white transition-colors flex items-center gap-2 group"
                 >
                   <div className="w-1.5 h-1.5 bg-brand-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -95,8 +96,8 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#hotels"
-                  onClick={(e) => handleLink(e, 'hotels', '/#hotels')}
+                  href="/hotels"
+                  onClick={(e) => handleLink(e, 'hotels', '/hotels')}
                   className="hover:text-white transition-colors flex items-center gap-2 group"
                 >
                   <div className="w-1.5 h-1.5 bg-brand-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -105,8 +106,8 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#packages"
-                  onClick={(e) => handleLink(e, 'home', '/#packages')}
+                  href="/packages"
+                  onClick={(e) => handleLink(e, 'packages', '/packages')}
                   className="hover:text-white transition-colors flex items-center gap-2 group"
                 >
                   <div className="w-1.5 h-1.5 bg-brand-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -115,8 +116,8 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#about"
-                  onClick={(e) => handleLink(e, 'about', '/#about')}
+                  href="/about"
+                  onClick={(e) => handleLink(e, 'about', '/about')}
                   className="hover:text-white transition-colors flex items-center gap-2 group"
                 >
                   <div className="w-1.5 h-1.5 bg-brand-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -133,9 +134,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-5 text-brand-beige/70 font-bold">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  {t?.footer?.support || 'الدعم'}
-                </a>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  {t?.nav?.contact || 'تواصل معنا'}
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
@@ -164,9 +165,9 @@ export default function Footer() {
               <li className="flex gap-4 text-brand-beige/70 font-medium">
                 <MapPin className="text-brand-gold shrink-0 w-6 h-6" />
                 <span>
-                  King Abdullah Rd, Makkah,
+                  {isRTL ? 'شارع التحلية، جدة،' : 'Tahlia St, Jeddah,'}
                   <br />
-                  Saudi Arabia
+                  {isRTL ? 'المملكة العربية السعودية' : 'Saudi Arabia'}
                 </span>
               </li>
               <li className="flex gap-4 text-brand-beige/70 font-medium">
@@ -175,7 +176,7 @@ export default function Footer() {
               </li>
               <li className="flex gap-4 text-brand-beige/70 font-medium">
                 <Mail className="text-brand-gold shrink-0 w-6 h-6" />
-                <span>info@masraa.com.sa</span>
+                <span>info@masraa.sa</span>
               </li>
             </ul>
           </div>
