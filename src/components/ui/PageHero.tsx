@@ -82,7 +82,7 @@ export default function PageHero({
 
           {/* Title */}
           <h1
-            className={`${height === 'large' ? 'text-5xl md:text-7xl lg:text-8xl' : 'text-4xl md:text-6xl lg:text-7xl'} font-serif font-medium mb-6 leading-tight drop-shadow-lg`}
+            className={`${height === 'large' ? 'text-5xl md:text-7xl lg:text-8xl' : 'text-4xl md:text-6xl lg:text-7xl'} font-serif font-medium mb-6 leading-tight drop-shadow-lg text-white`}
           >
             {title}
           </h1>

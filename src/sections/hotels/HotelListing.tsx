@@ -100,15 +100,18 @@ export default function HotelListing() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
+                  {/* Subtle Top Overlay to make badges pop */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent pointer-events-none" />
+
                   <div className="absolute top-4 w-full px-4 flex justify-between items-start">
                     <Badge variant="white" className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-brand-gold" />
+                      <MapPin className="w-4 h-4 text-brand-gold" />
                       {hotel.location === 'Makkah'
                         ? t?.hero?.makkah || 'مكة المكرمة'
                         : t?.hero?.madinah || 'المدينة المنورة'}
                     </Badge>
                     <Badge variant="burgundy" className="flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-brand-gold text-brand-gold" />
+                      <Star className="w-4 h-4 fill-brand-gold text-brand-gold" />
                       {hotel.rating}
                     </Badge>
                   </div>

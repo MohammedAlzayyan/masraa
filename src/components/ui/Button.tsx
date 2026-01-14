@@ -80,13 +80,13 @@ export default function Button({
       )}
 
       {!isLoading && Icon && iconPosition === 'left' && (
-        <Icon className={`w-5 h-5 ${iconMargin}`} />
+        <Icon className={`w-5 h-5 text-current flex-shrink-0 ${iconMargin}`} />
       )}
 
       {children}
 
       {!isLoading && Icon && iconPosition === 'right' && (
-        <Icon className={`w-5 h-5 ${iconMarginRight}`} />
+        <Icon className={`w-5 h-5 text-current flex-shrink-0 ${iconMarginRight}`} />
       )}
     </button>
   )
