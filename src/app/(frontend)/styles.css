@@ -6,13 +6,13 @@
 
 @layer base {
   :root {
-    /* Colors (RGB format for original codes) */
-    --brand-burgundy-rgb: 114, 47, 55; /* #722F37 */
-    --brand-gold-rgb: 212, 175, 55; /* #D4AF37 */
-    --brand-beige-rgb: 245, 245, 220; /* #F5F5DC */
-    --brand-wine-rgb: 139, 58, 66; /* #8B3A42 */
+    /* Colors (Modern Space-Separated RGB format for Tailwind opacity support) */
+    --brand-burgundy-rgb: 114 47 55; /* #722F37 */
+    --brand-gold-rgb: 212 175 55; /* #D4AF37 */
+    --brand-beige-rgb: 245 245 220; /* #F5F5DC */
+    --brand-wine-rgb: 139 58 66; /* #8B3A42 */
 
-    /* Semantic Helpers */
+    /* Semantic Helpers (Modern Syntax) */
     --brand-burgundy: rgb(var(--brand-burgundy-rgb));
     --brand-gold: rgb(var(--brand-gold-rgb));
     --brand-beige: rgb(var(--brand-beige-rgb));
@@ -48,8 +48,8 @@
 
   body {
     @apply font-sans text-foreground bg-background antialiased overflow-x-hidden;
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1rem; /* This will be 18px because html is 18px */
+    line-height: 1.777; /* Approx 32px when base is 18px */
     margin: 0;
   }
 
@@ -106,7 +106,7 @@
   }
 
   .premium-shadow {
-    box-shadow: 0 20px 50px rgba(101, 28, 48, 0.1);
+    box-shadow: 0 20px 50px rgba(var(--brand-burgundy-rgb), 0.1);
   }
 
   .section-padding {

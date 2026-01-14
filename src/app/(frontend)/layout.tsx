@@ -27,7 +27,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="ar" dir="rtl">
       <body>
         <LanguageProvider>
-          <div className="min-h-screen selection:bg-brand-gold selection:text-white bg-white transition-colors duration-500">
+          <div className="min-h-screen selection:bg-brand-gold selection:text-white transition-colors duration-500">
             <Header />
             <main>{children}</main>
             <ScrollToTop />
