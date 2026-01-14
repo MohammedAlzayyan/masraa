@@ -7,9 +7,11 @@ import { MapPin, Star, Search, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import { HOTELS } from '@/lib/constants'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import Badge from '@/components/ui/Badge'
+import Button from '@/components/ui/Button'
 
 export default function HotelListing() {
-  const { t, isRTL, language } = useLanguage()
+  const { t, isRTL } = useLanguage()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCity, setSelectedCity] = useState<'all' | 'makkah' | 'madinah'>('all')
 
@@ -29,7 +31,7 @@ export default function HotelListing() {
 
       return matchesCity && matchesSearch
     })
-  }, [selectedCity, searchQuery, t, language])
+  }, [selectedCity, searchQuery, t])
 
   const getTranslatedName = (name: string) => {
     return t?.hotels?.names?.[name as keyof typeof t.hotels.names] || name
@@ -62,21 +64,19 @@ export default function HotelListing() {
             {/* City Filter Tabs */}
             <div className="flex bg-brand-beige/10 p-1.5 rounded-2xl w-full md:w-auto">
               {(['all', 'makkah', 'madinah'] as const).map((city) => (
-                <button
+                <Button
                   key={city}
+                  variant={selectedCity === city ? 'secondary' : 'ghost'}
+                  size="md"
                   onClick={() => setSelectedCity(city)}
-                  className={`flex-1 md:flex-none px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
-                    selectedCity === city
-                      ? 'bg-white text-brand-burgundy shadow-md'
-                      : 'text-brand-wine/50 hover:text-brand-burgundy'
-                  }`}
+                  className={`flex-1 md:flex-none ${selectedCity === city ? 'bg-white shadow-md' : 'text-brand-wine/50 hover:text-brand-burgundy'}`}
                 >
                   {city === 'all'
                     ? t?.hotels?.allCities || 'كل المدن'
                     : city === 'makkah'
                       ? t?.hero?.makkah || 'مكة المكرمة'
                       : t?.hero?.madinah || 'المدينة المنورة'}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -101,16 +101,16 @@ export default function HotelListing() {
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 w-full px-4 flex justify-between items-start">
-                    <span className="bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-brand-burgundy flex items-center gap-1 shadow-sm">
+                    <Badge variant="white" className="flex items-center gap-1">
                       <MapPin className="w-3 h-3 text-brand-gold" />
                       {hotel.location === 'Makkah'
                         ? t?.hero?.makkah || 'مكة المكرمة'
                         : t?.hero?.madinah || 'المدينة المنورة'}
-                    </span>
-                    <div className="bg-brand-burgundy text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm flex items-center gap-1">
+                    </Badge>
+                    <Badge variant="burgundy" className="flex items-center gap-1">
                       <Star className="w-3 h-3 fill-brand-gold text-brand-gold" />
                       {hotel.rating}
-                    </div>
+                    </Badge>
                   </div>
                 </div>
 
@@ -151,13 +151,11 @@ export default function HotelListing() {
                       </div>
                     </div>
 
-                    <button className="w-12 h-12 bg-brand-burgundy text-white rounded-2xl flex items-center justify-center hover:bg-brand-gold transition-colors shadow-lg group/btn">
-                      {isRTL ? (
-                        <ArrowLeft className="w-5 h-5 group-hover/btn:-translate-x-1 transition-transform" />
-                      ) : (
-                        <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                      )}
-                    </button>
+                    <Button
+                      variant="primary"
+                      className="w-12 h-12 p-0 rounded-2xl"
+                      icon={isRTL ? ArrowLeft : ArrowRight}
+                    />
                   </div>
                 </div>
               </ScrollReveal>

@@ -1,15 +1,13 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
 import { useLanguage } from '@/components/providers/LanguageProvider'
-import ScrollReveal from '@/components/ui/ScrollReveal'
-import Breadcrumb from '@/components/ui/Breadcrumb'
-import CTA from '@/components/sections/CTA'
-import AboutStory from '@/components/sections/about/AboutStory'
-import AboutVisionMission from '@/components/sections/about/AboutVisionMission'
-import AboutFeatures from '@/components/sections/about/AboutFeatures'
-import AboutValues from '@/components/sections/about/AboutValues'
+import PageHero from '@/components/ui/PageHero'
+import CTA from '@/sections/CTA'
+import AboutStory from '@/sections/about/AboutStory'
+import AboutVisionMission from '@/sections/about/AboutVisionMission'
+import AboutFeatures from '@/sections/about/AboutFeatures'
+import AboutValues from '@/sections/about/AboutValues'
 
 export default function AboutPage() {
   const { t, isRTL } = useLanguage()
@@ -18,39 +16,20 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 1. Hero Section */}
-      <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden pt-20">
-        <Image
-          src="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop"
-          alt="Masraa About Hero"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-brand-burgundy/80 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy via-transparent to-transparent" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white w-full">
-          <ScrollReveal animation="fade-up">
-            {/* Breadcrumb aligned by direction */}
-            <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'} mb-12`}>
-              <Breadcrumb items={breadcrumbItems} />
-            </div>
-
-            <span className="block text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 text-base md:text-lg">
-              {t?.about?.heroTitle || 'من نحن'}
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium mb-6 leading-tight">
-              {t?.about?.heroSub || 'مسرا – شريكك الموثوق في رحلتك'}
-            </h1>
-            <div className="w-24 h-1 bg-brand-gold mx-auto mb-8 rounded-full" />
-            <p className="max-w-3xl mx-auto text-lg md:text-2xl text-white/90 font-light leading-relaxed">
-              {t?.about?.heroDesc ||
-                'نرافقك في كل خطوة لنمنحك تجربة سفر استثنائية مليئة بالراحة والأمان'}
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* 1. Hero Section - Refactored */}
+      <PageHero
+        image="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=2000&auto=format&fit=crop"
+        breadcrumbItems={breadcrumbItems}
+        badge={
+          <span className="block text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 text-base md:text-lg">
+            {t?.about?.heroTitle || 'من نحن'}
+          </span>
+        }
+        title={t?.about?.heroSub || 'مسرا – شريكك الموثوق في رحلتك'}
+        description={
+          t?.about?.heroDesc || 'نرافقك في كل خطوة لنمنحك تجربة سفر استثنائية مليئة بالراحة والأمان'
+        }
+      />
 
       <AboutStory />
       <AboutVisionMission />

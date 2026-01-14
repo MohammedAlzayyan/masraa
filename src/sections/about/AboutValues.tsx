@@ -4,6 +4,7 @@ import React from 'react'
 import { Handshake, Star, ShieldCheck, Briefcase, Lightbulb, Heart } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 export default function AboutValues() {
   const { t, isRTL } = useLanguage()
@@ -20,16 +21,14 @@ export default function AboutValues() {
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal animation="fade-up" className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-serif text-brand-burgundy mb-6">
-            {t?.about?.valuesTitle || 'قيمنا الأساسية'}
-          </h2>
-          <p className="max-w-2xl mx-auto text-brand-wine/60 text-lg">
-            {isRTL
+        <SectionHeader
+          title={t?.about?.valuesTitle || 'قيمنا الأساسية'}
+          description={
+            isRTL
               ? 'نرتكز في عملنا على مجموعة من القيم التي تضمن التميز والنزاهة في كل ما نقدمه'
-              : 'We ground our work in a set of values that ensure excellence and integrity in everything we deliver'}
-          </p>
-        </ScrollReveal>
+              : 'We ground our work in a set of values that ensure excellence and integrity in everything we deliver'
+          }
+        />
 
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
           {values.map((value, idx) => (

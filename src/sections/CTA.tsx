@@ -4,6 +4,7 @@ import React from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import Button from '@/components/ui/Button'
 
 export default function CTA() {
   const { t, isRTL } = useLanguage()
@@ -30,17 +31,22 @@ export default function CTA() {
             {t?.cta?.desc || 'احجز رحلتك الآن واستمتع بخدمات سياحية مميزة مع ضمان الجودة والأمان'}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-            <button className="bg-brand-gold hover:bg-white text-brand-burgundy px-12 py-6 rounded-full font-black text-lg transition-all shadow-2xl flex items-center gap-4 group">
-              {t?.cta?.btn || 'احجز الآن'}{' '}
-              {isRTL ? (
-                <ArrowLeft className="group-hover:-translate-x-2 transition-transform" />
-              ) : (
-                <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-              )}
-            </button>
-            <button className="border-2 border-white/20 hover:border-brand-gold hover:text-brand-gold text-white px-12 py-6 rounded-full font-black text-lg transition-all">
+            <Button
+              variant="gold"
+              size="xl"
+              icon={isRTL ? ArrowLeft : ArrowRight}
+              iconPosition="right"
+              className="px-12 py-6 rounded-full"
+            >
+              {t?.cta?.btn || 'احجز الآن'}
+            </Button>
+            <Button
+              variant="outline"
+              size="xl"
+              className="px-12 py-6 rounded-full border-white/20 text-white hover:border-brand-gold hover:text-brand-gold"
+            >
               {t?.cta?.consult || 'استشارة مجانية'}
-            </button>
+            </Button>
           </div>
         </div>
       </ScrollReveal>

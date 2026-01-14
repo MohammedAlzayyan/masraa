@@ -5,6 +5,7 @@ import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import { TESTIMONIALS } from '@/lib/constants'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 export default function Testimonials() {
   const { t, isRTL } = useLanguage()
@@ -22,14 +23,10 @@ export default function Testimonials() {
   return (
     <section className="py-24 bg-brand-beige/5 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal animation="fade-up" className="text-center mb-16">
-          <span className="text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 block">
-            {t?.testimonials?.tag || 'آراء العملاء'}
-          </span>
-          <h2 className="text-4xl md:text-6xl font-serif text-brand-burgundy">
-            {t?.testimonials?.title || 'ماذا يقول عملاؤنا'}
-          </h2>
-        </ScrollReveal>
+        <SectionHeader
+          tag={t?.testimonials?.tag || 'آراء العملاء'}
+          title={t?.testimonials?.title || 'ماذا يقول عملاؤنا'}
+        />
 
         <ScrollReveal animation="fade-up" delay={0.2} className="relative max-w-4xl mx-auto">
           {/* Slider Container */}

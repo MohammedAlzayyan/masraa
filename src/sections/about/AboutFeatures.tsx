@@ -4,6 +4,7 @@ import React from 'react'
 import { ShieldCheck, Moon, Hotel, Car, Headphones, Leaf } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 export default function AboutFeatures() {
   const { t, isRTL } = useLanguage()
@@ -47,14 +48,10 @@ export default function AboutFeatures() {
     <section className="py-24 bg-brand-beige/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <ScrollReveal animation="fade-up">
-            <span className="text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 block">
-              {t?.why?.tag || 'لماذا مسرا؟'}
-            </span>
-            <h2 className="text-4xl md:text-5xl font-serif text-brand-burgundy">
-              {t?.why?.title || 'أسباب اختيارك لنا'}
-            </h2>
-          </ScrollReveal>
+          <SectionHeader
+            tag={t?.why?.tag || 'لماذا مسرا؟'}
+            title={t?.why?.title || 'أسباب اختيارك لنا'}
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

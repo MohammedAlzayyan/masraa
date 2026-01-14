@@ -6,6 +6,8 @@ import { Calendar, CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import { PACKAGES } from '@/lib/constants'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import Badge from '@/components/ui/Badge'
+import Button from '@/components/ui/Button'
 
 export default function PackageListing() {
   const { t, isRTL } = useLanguage()
@@ -27,14 +29,16 @@ export default function PackageListing() {
         <ScrollReveal animation="fade-up" className="mb-16">
           <div className="flex flex-wrap justify-center gap-4 bg-white/50 backdrop-blur-md p-2 rounded-[24px] border border-brand-gold/10 w-fit mx-auto">
             {(['all', 'Umrah', 'Hajj', 'Cultural'] as const).map((type) => (
-              <button
+              <Button
                 key={type}
+                variant={selectedType === type ? 'primary' : 'ghost'}
+                size="md"
                 onClick={() => setSelectedType(type)}
-                className={`px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
+                className={
                   selectedType === type
-                    ? 'bg-brand-burgundy text-white shadow-lg'
+                    ? ''
                     : 'text-brand-wine/60 hover:text-brand-burgundy hover:bg-brand-gold/5'
-                }`}
+                }
               >
                 {type === 'all'
                   ? t?.packages?.allPackages || 'جميع الباقات'
@@ -43,7 +47,7 @@ export default function PackageListing() {
                     : type === 'Hajj'
                       ? t?.packages?.hajj || 'الحج'
                       : t?.packages?.cultural || 'رحلات ثقافية'}
-              </button>
+              </Button>
             ))}
           </div>
         </ScrollReveal>
@@ -66,13 +70,13 @@ export default function PackageListing() {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
-                  <span className="bg-brand-gold text-brand-burgundy px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                  <Badge variant="gold" className="shadow-lg">
                     {pkg.type === 'Hajj'
                       ? t?.packages?.hajj || 'الحج'
                       : pkg.type === 'Umrah'
                         ? t?.packages?.umrah || 'العمرة'
                         : t?.packages?.cultural || 'ثقافية'}
-                  </span>
+                  </Badge>
                 </div>
               </div>
 
@@ -116,14 +120,14 @@ export default function PackageListing() {
                     </div>
                   </div>
 
-                  <button className="bg-brand-burgundy text-white px-8 py-4 rounded-2xl font-bold hover:bg-brand-burgundy/90 transition-all shadow-lg flex items-center gap-3 group/btn">
-                    <span>{t?.packages?.bookNow || 'احجز الآن'}</span>
-                    {isRTL ? (
-                      <ArrowLeft className="w-5 h-5 group-hover/btn:-translate-x-1 transition-transform" />
-                    ) : (
-                      <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                    )}
-                  </button>
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    icon={isRTL ? ArrowLeft : ArrowRight}
+                    iconPosition="right"
+                  >
+                    {t?.packages?.bookNow || 'احجز الآن'}
+                  </Button>
                 </div>
               </div>
             </ScrollReveal>

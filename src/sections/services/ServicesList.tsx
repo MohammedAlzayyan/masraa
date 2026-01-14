@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Hotel, Car, Plane, Map, Headset, Users, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 export default function ServicesList() {
   const { t, isRTL } = useLanguage()
@@ -66,20 +67,14 @@ export default function ServicesList() {
   return (
     <section className="py-24 bg-brand-beige/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <ScrollReveal animation="fade-up">
-            <span className="text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 block">
-              {t?.services?.tag || 'خدمات متكاملة'}
-            </span>
-            <h2 className="text-4xl md:text-6xl font-serif text-brand-burgundy mb-6">
-              {t?.services?.title || 'التميز في كل التفاصيل'}
-            </h2>
-            <p className="max-w-2xl mx-auto text-brand-wine/60 text-lg">
-              {t?.services?.overview ||
-                'في مسراء نقدم باقة متكاملة من الخدمات السياحية المصممة لتلبي جميع احتياجات المسافرين والزوار.'}
-            </p>
-          </ScrollReveal>
-        </div>
+        <SectionHeader
+          tag={t?.services?.tag || 'خدمات متكاملة'}
+          title={t?.services?.title || 'التميز في كل التفاصيل'}
+          description={
+            t?.services?.overview ||
+            'في مسراء نقدم باقة متكاملة من الخدمات السياحية المصممة لتلبي جميع احتياجات المسافرين والزوار.'
+          }
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, idx) => (

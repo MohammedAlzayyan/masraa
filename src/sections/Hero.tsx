@@ -214,7 +214,7 @@ export default function Hero() {
               </div>
 
               {isDestOpen && (
-                <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-2xl shadow-[0_30px_70px_rgba(0,0,0,0.5)] border border-brand-gold/20 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-2xl shadow-[0_30px_70px_rgba(0,0,0,0.5)] border border-brand-gold/20 overflow-hidden z-[100] animate-slideDown duration-200">
                   {destinations.map((dest) => (
                     <div
                       key={dest.value}
@@ -258,7 +258,7 @@ export default function Hero() {
               </div>
 
               {isDateOpen && (
-                <div className="absolute top-full left-0 lg:-left-24 lg:right-auto mt-3 bg-white rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.5)] border border-brand-gold/20 p-8 z-[100] animate-in fade-in slide-in-from-top-2 duration-200 min-w-[320px] md:min-w-[650px]">
+                <div className="absolute top-full left-0 lg:-left-24 lg:right-auto mt-3 bg-white rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.5)] border border-brand-gold/20 p-8 z-[100] animate-slideDown duration-200 min-w-[320px] md:min-w-[650px]">
                   {/* Calendar Navigation */}
                   <div className="flex items-center justify-between mb-8">
                     <button
@@ -354,7 +354,7 @@ export default function Hero() {
               </div>
 
               {isGuestOpen && (
-                <div className="absolute top-full left-0 right-0 lg:w-[360px] lg:right-auto lg:left-0 mt-3 bg-white rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.5)] border border-brand-gold/20 p-8 z-[110] animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute top-full left-0 right-0 lg:w-[360px] lg:right-auto lg:left-0 mt-3 bg-white rounded-3xl shadow-[0_30px_70px_rgba(0,0,0,0.5)] border border-brand-gold/20 p-8 z-[110] animate-slideDown duration-200">
                   <div className="space-y-8">
                     <div className="flex items-center justify-between">
                       <div className={`flex flex-col ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -480,57 +480,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes ken-burns {
-          0% {
-            transform: scale(1);
-          }
-          100% {
-            transform: scale(1.15);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 1.2s ease-out forwards;
-        }
-        .animate-slideUp {
-          animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .delay-100 {
-          animation-delay: 0.1s;
-        }
-        .delay-300 {
-          animation-delay: 0.3s;
-        }
-        .delay-500 {
-          animation-delay: 0.5s;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </section>
   )
 }

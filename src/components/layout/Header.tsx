@@ -98,6 +98,9 @@ export default function Header() {
               ? 'bg-brand-burgundy/95 backdrop-blur-md py-3 shadow-lg'
               : 'bg-transparent py-6'
       }`}
+      style={{
+        height: isScrolled ? 'var(--header-height-scrolled, 70px)' : 'var(--header-height, 90px)',
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}

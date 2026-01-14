@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import SectionHeader from '@/components/ui/SectionHeader'
+import Badge from '@/components/ui/Badge'
 
 export default function AboutStory() {
   const { t, isRTL } = useLanguage()
@@ -37,13 +39,19 @@ export default function AboutStory() {
           </ScrollReveal>
 
           <ScrollReveal animation="slide-left">
-            <span className="text-brand-gold font-bold tracking-[0.2em] uppercase mb-4 block">
-              {t?.about?.storyTitle || 'قصة مسرا'}
-            </span>
-            <h2 className="text-4xl md:text-5xl font-serif text-brand-burgundy mb-8 leading-tight">
-              {t?.about?.title || 'صناع تجارب'}{' '}
-              <span className="text-brand-gold italic">{t?.about?.titleItalic || 'استثنائية'}</span>
-            </h2>
+            <SectionHeader
+              tag={t?.about?.storyTitle || 'قصة مسرا'}
+              title={
+                <>
+                  {t?.about?.title || 'صناع تجارب'}{' '}
+                  <span className="text-brand-gold italic">
+                    {t?.about?.titleItalic || 'استثنائية'}
+                  </span>
+                </>
+              }
+              centered={false}
+              className="mb-8"
+            />
             <div className="prose prose-lg text-brand-wine/80 mb-8">
               <p className="mb-6 leading-relaxed">
                 {t?.about?.storyPara1 ||
@@ -55,14 +63,20 @@ export default function AboutStory() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <span className="py-2 px-4 rounded-full bg-brand-beige/20 text-brand-burgundy text-sm font-bold flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-brand-gold" />
+              <Badge
+                variant="white"
+                className="bg-brand-beige/20 text-brand-burgundy border-none lowercase tracking-normal"
+              >
+                <CheckCircle2 className="w-4 h-4 text-brand-gold ltr:mr-2 rtl:ml-2" />
                 {isRTL ? 'خدمات متكاملة' : 'Integrated Services'}
-              </span>
-              <span className="py-2 px-4 rounded-full bg-brand-beige/20 text-brand-burgundy text-sm font-bold flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-brand-gold" />
+              </Badge>
+              <Badge
+                variant="white"
+                className="bg-brand-beige/20 text-brand-burgundy border-none lowercase tracking-normal"
+              >
+                <CheckCircle2 className="w-4 h-4 text-brand-gold ltr:mr-2 rtl:ml-2" />
                 {isRTL ? 'فريق احترافي' : 'Professional Team'}
-              </span>
+              </Badge>
             </div>
           </ScrollReveal>
         </div>

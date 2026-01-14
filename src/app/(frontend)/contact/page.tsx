@@ -1,13 +1,10 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
-
 import { useLanguage } from '@/components/providers/LanguageProvider'
-import ScrollReveal from '@/components/ui/ScrollReveal'
-import Breadcrumb from '@/components/ui/Breadcrumb'
-import ContactInfo from '@/components/sections/contact/ContactInfo'
-import ContactForm from '@/components/sections/contact/ContactForm'
+import ContactInfo from '@/sections/contact/ContactInfo'
+import ContactForm from '@/sections/contact/ContactForm'
+import PageHero from '@/components/ui/PageHero'
 
 export default function ContactPage() {
   const { t, isRTL } = useLanguage()
@@ -16,40 +13,17 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-brand-beige/5">
-      {/* 1. Hero Section */}
-      <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden pt-20">
-        <Image
-          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000&auto=format&fit=crop"
-          alt="Contact Masraa"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-brand-burgundy/80 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy via-transparent to-transparent" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white w-full">
-          <ScrollReveal animation="fade-up">
-            {/* Breadcrumb aligned by direction */}
-            <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'} mb-12`}>
-              <Breadcrumb items={breadcrumbItems} />
-            </div>
-
-            <span className="block text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 text-base md:text-lg">
-              {t?.nav?.contact || 'تواصل معنا'}
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium mb-6 leading-tight">
-              {isRTL ? 'نحن هنا لمساعدتك' : 'We Are Here to Help'}
-            </h1>
-            <div className="w-24 h-1 bg-brand-gold mx-auto mb-8 rounded-full" />
-            <p className="max-w-3xl mx-auto text-lg md:text-2xl text-white/90 font-light leading-relaxed">
-              {isRTL
-                ? 'تواصل مع فريقنا المخصص لخدمتك على مدار الساعة'
-                : 'Connect with our dedicated team serving you around the clock'}
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* 1. Hero Section - Refactored */}
+      <PageHero
+        image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000&auto=format&fit=crop"
+        breadcrumbItems={breadcrumbItems}
+        title={isRTL ? 'نحن هنا لمساعدتك' : 'We Are Here to Help'}
+        description={
+          isRTL
+            ? 'تواصل مع فريقنا المخصص لخدمتك على مدار الساعة'
+            : 'Connect with our dedicated team serving you around the clock'
+        }
+      />
 
       {/* 2. Main Content */}
       <section className="py-24 relative">

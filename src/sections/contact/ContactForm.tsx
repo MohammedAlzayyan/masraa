@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Send, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import Button from '@/components/ui/Button'
 
 export default function ContactForm() {
   const { isRTL } = useLanguage()
@@ -108,24 +109,15 @@ export default function ContactForm() {
                 />
               </div>
 
-              <button
+              <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-brand-burgundy text-white font-bold py-4 rounded-xl shadow-lg hover:bg-brand-burgundy/90 hover:shadow-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                isLoading={isSubmitting}
+                className="w-full py-4"
+                icon={Send}
+                iconPosition="right"
               >
-                {isSubmitting ? (
-                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <span>{isRTL ? 'إرسال الرسالة' : 'Send Message'}</span>
-                    {isRTL ? (
-                      <Send className="w-5 h-5 -scale-x-100 group-hover:-translate-x-1 transition-transform" />
-                    ) : (
-                      <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    )}
-                  </>
-                )}
-              </button>
+                {isRTL ? 'إرسال الرسالة' : 'Send Message'}
+              </Button>
             </form>
           )}
         </div>

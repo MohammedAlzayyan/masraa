@@ -1,13 +1,13 @@
 import React from 'react'
-import Hero from '@/components/sections/Hero'
-import About from '@/components/sections/About'
-import Services from '@/components/sections/Services'
-import Testimonials from '@/components/sections/Testimonials'
-import CTA from '@/components/sections/CTA'
+import Hero from '@/sections/Hero'
+import About from '@/sections/About'
+import Services from '@/sections/Services'
+import Testimonials from '@/sections/Testimonials'
+import CTA from '@/sections/CTA'
 // TODO: استورد باقي المكونات بعد نقلها
-// import FeaturedHotels from '@/components/sections/FeaturedHotels'
-// import Packages from '@/components/sections/Packages'
-// import WhyChooseUs from '@/components/sections/WhyChooseUs'
+// import FeaturedHotels from '@/sections/FeaturedHotels'
+// import Packages from '@/sections/Packages'
+// import WhyChooseUs from '@/sections/WhyChooseUs'
 
 export default async function HomePage() {
   return (

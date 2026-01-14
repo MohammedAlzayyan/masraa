@@ -7,6 +7,8 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import IconRenderer from '@/components/ui/IconRenderer'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import SectionHeader from '@/components/ui/SectionHeader'
+import Button from '@/components/ui/Button'
 
 interface ServicesProps {
   onSeeMore?: () => void
@@ -66,30 +68,22 @@ export default function Services({ onSeeMore }: ServicesProps) {
   return (
     <section id="services" className="py-24 bg-brand-beige/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal
-          animation="fade-up"
-          className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
-        >
-          <div className="text-center md:text-right">
-            <span className="text-brand-gold font-bold tracking-[0.3em] uppercase mb-4 block">
-              {t?.services?.tag || 'خدماتنا'}
-            </span>
-            <h2 className="text-5xl md:text-6xl font-serif text-brand-burgundy mb-6">
-              {t?.services?.title || 'ما نقدمه'}
-            </h2>
-          </div>
-          <button
-            onClick={handleSeeMore}
-            className="flex items-center gap-3 text-brand-burgundy font-bold border-b-2 border-brand-gold hover:text-brand-gold transition-all pb-2 group mb-2"
-          >
-            <span>{isRTL ? 'عرض كافة الخدمات' : 'View All Services'}</span>
-            {isRTL ? (
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" />
-            ) : (
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            )}
-          </button>
-        </ScrollReveal>
+        <SectionHeader
+          tag={t?.services?.tag || 'خدماتنا'}
+          title={t?.services?.title || 'ما نقدمه'}
+          centered={false}
+          action={
+            <Button
+              variant="ghost"
+              onClick={handleSeeMore}
+              icon={isRTL ? ArrowLeft : ArrowRight}
+              iconPosition="right"
+              className="border-b-2 border-brand-gold rounded-none pb-2 hover:bg-transparent"
+            >
+              {isRTL ? 'عرض كافة الخدمات' : 'View All Services'}
+            </Button>
+          }
+        />
 
         <ScrollReveal
           animation="fade-up"
