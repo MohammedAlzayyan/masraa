@@ -84,13 +84,13 @@ export default function ServicesList() {
               delay={idx * 0.1}
               className="group h-full"
             >
-              <div className="bg-white rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full border border-brand-gold/10 flex flex-col hover:-translate-y-2">
+              <div className="bg-white rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full border border-brand-gold/10 flex flex-col hover:-translate-y-2 card-hover">
                 <div className="relative h-64 overflow-hidden">
                   <Image
                     src={service.image}
                     alt={service.title}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 image-zoom"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                     <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">

@@ -90,7 +90,7 @@ export default function HotelListing() {
                 key={hotel.id}
                 animation="fade-up"
                 delay={idx * 0.1}
-                className="group bg-white rounded-[32px] overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-brand-gold/5 flex flex-col h-full"
+                className="group bg-white rounded-[32px] overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-brand-gold/5 flex flex-col h-full card-hover"
               >
                 {/* Image */}
                 <div className="relative h-72 overflow-hidden">
@@ -98,7 +98,7 @@ export default function HotelListing() {
                     src={hotel.image}
                     alt={getTranslatedName(hotel.name)}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 image-zoom"
                   />
                   {/* Subtle Top Overlay to make badges pop */}
                   <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent pointer-events-none" />

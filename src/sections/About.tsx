@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { Target, Eye, ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'

@@ -59,7 +59,7 @@ export default function PackageListing() {
               key={pkg.id}
               animation="fade-up"
               delay={idx * 0.1}
-              className="group bg-white rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-brand-gold/10 flex flex-col lg:flex-row h-full"
+              className="group bg-white rounded-[40px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-brand-gold/10 flex flex-col lg:flex-row h-full card-hover"
             >
               {/* Image Side */}
               <div className="relative w-full lg:w-2/5 min-h-[300px] overflow-hidden">
@@ -67,7 +67,7 @@ export default function PackageListing() {
                   src={pkg.image}
                   alt={getTranslatedName(pkg.name)}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700 image-zoom"
                 />
                 <div className="absolute top-6 left-6 right-6 flex justify-between items-start">
                   <Badge variant="gold" className="shadow-lg">
