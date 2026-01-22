@@ -120,7 +120,7 @@ export default function HotelListing() {
                 {/* Content */}
                 <div className="p-8 flex-1 flex flex-col">
                   {/* Name */}
-                  <h3 className="text-xl font-bold font-serif text-brand-burgundy mb-2 line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-xl font-bold text-brand-burgundy mb-2 line-clamp-2 min-h-[3.5rem]">
                     {getTranslatedName(hotel.name)}
                   </h3>
 

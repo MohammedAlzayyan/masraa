@@ -23,7 +23,7 @@ export default function AboutVisionMission() {
             <div className="w-16 h-16 bg-brand-gold rounded-2xl flex items-center justify-center text-brand-burgundy mb-8 shadow-lg shadow-brand-gold/20">
               <Award className="w-8 h-8" />
             </div>
-            <h3 className="text-3xl font-serif mb-4 flex items-center gap-3">
+            <h3 className="text-3xl mb-4 flex items-center gap-3">
               {t?.about?.missionTitle || 'رسالتنا'}
             </h3>
             <p className="text-white/80 text-lg leading-relaxed">
@@ -40,7 +40,7 @@ export default function AboutVisionMission() {
             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-burgundy mb-8 shadow-lg">
               <Moon className="w-8 h-8" />
             </div>
-            <h3 className="text-3xl font-serif mb-4 text-brand-gold flex items-center gap-3">
+            <h3 className="text-3xl mb-4 text-brand-gold flex items-center gap-3">
               {t?.about?.visionTitle || 'رؤيتنا'}
             </h3>
             <p className="text-white/80 text-lg leading-relaxed">

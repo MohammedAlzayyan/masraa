@@ -106,10 +106,10 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer">
           <div className="w-10 h-10 bg-brand-gold rounded-full flex items-center justify-center text-brand-burgundy shadow-lg">
-            <span className="font-serif font-bold text-xl">M</span>
+            <span className="font-bold text-xl">M</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-serif font-bold text-xl leading-tight text-white">MASRAA</span>
+            <span className="font-bold text-xl leading-tight text-white">MASRAA</span>
             <span className="text-[10px] uppercase tracking-[0.2em] text-brand-gold font-bold">
               Travel & Tourism
             </span>
@@ -145,16 +145,12 @@ export default function Header() {
           </button>
 
           <a
-            href="tel:+966500000000"
+            href="tel:+966555747885"
             className="flex items-center gap-2 text-brand-gold font-bold text-sm"
           >
             <Phone className="w-4 h-4" />
-            <span dir="ltr">+966 500 000 000</span>
+            <span dir="ltr">+966 555 747 885</span>
           </a>
-
-          <button className="bg-brand-gold hover:bg-white text-brand-burgundy px-6 py-2 rounded-full text-sm font-bold transition-all shadow-xl">
-            {t?.nav?.bookNow || 'احجز الآن'}
-          </button>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -173,7 +169,7 @@ export default function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-xl font-serif border-b border-white/5 pb-3 ${
+              className={`text-xl border-b border-white/5 pb-3 ${
                 isLinkActive(link) ? 'text-brand-gold' : 'text-white'
               }`}
               onClick={(e) => handleNavLinkClick(e, link.page, link.href)}
@@ -191,9 +187,6 @@ export default function Header() {
             >
               <Globe className="w-5 h-5" />
               <span>{language === 'ar' ? 'Switch to English' : 'التحويل للعربية'}</span>
-            </button>
-            <button className="bg-brand-gold text-brand-burgundy w-full py-4 rounded-xl font-bold shadow-lg">
-              {t?.nav?.bookNow || 'احجز الآن'}
             </button>
           </div>
         </div>

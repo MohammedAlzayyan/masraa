@@ -172,7 +172,7 @@ export default function Hero() {
         <span className="text-brand-gold font-bold tracking-[0.3em] uppercase mb-6 animate-fadeIn">
           {t?.hero?.welcome || 'مرحباً بك'}
         </span>
-        <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif text-white mb-8 leading-tight animate-slideUp">
+        <h1 className="text-4xl md:text-7xl lg:text-8xl text-white mb-8 leading-tight animate-slideUp">
           {t?.hero?.title || 'رحلتك الروحانية'}
           <br />
           <span className="text-brand-gold italic">{t?.hero?.titleItalic || 'تبدأ هنا'}</span>

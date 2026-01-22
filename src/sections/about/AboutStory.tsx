@@ -27,7 +27,7 @@ export default function AboutStory() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-10 left-10 md:left-auto md:right-10 right-10 md:right-auto text-white p-6 backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 max-w-xs">
-                <p className="font-serif text-2xl mb-2">2030</p>
+                <p className="text-2xl mb-2">2030</p>
                 <p className="text-sm opacity-90">
                   {isRTL ? 'رؤية متوافقة مع المملكة' : 'Aligned with Vision 2030'}
                 </p>

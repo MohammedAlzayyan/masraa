@@ -22,7 +22,7 @@ export default function CTA() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-8xl font-serif text-white mb-10 leading-[1.1]">
+          <h2 className="text-5xl md:text-8xl text-white mb-10 leading-[1.1]">
             {t?.cta?.title || 'ابدأ رحلتك الروحانية'}
             <br />
             <span className="text-brand-gold italic">{t?.cta?.titleItalic || 'اليوم'}</span>

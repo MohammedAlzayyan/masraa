@@ -83,7 +83,7 @@ export default function PackageListing() {
               {/* Content Side */}
               <div className="p-8 lg:p-10 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl md:text-3xl font-bold font-serif text-brand-burgundy">
+                  <h3 className="text-2xl md:text-3xl font-bold text-brand-burgundy">
                     {getTranslatedName(pkg.name)}
                   </h3>
                 </div>

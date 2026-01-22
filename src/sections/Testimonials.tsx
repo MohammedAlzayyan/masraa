@@ -51,7 +51,7 @@ export default function Testimonials() {
                         ))}
                       </div>
 
-                      <p className="text-xl md:text-3xl font-serif text-brand-burgundy italic mb-10 leading-relaxed font-medium">
+                      <p className="text-xl md:text-3xl text-brand-burgundy italic mb-10 leading-relaxed font-medium">
                         &quot;{testi.content}&quot;
                       </p>
 

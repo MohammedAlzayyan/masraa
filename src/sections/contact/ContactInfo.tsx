@@ -73,7 +73,7 @@ export default function ContactInfo() {
                   {item.title}
                 </h3>
                 <p
-                  className="text-lg md:text-xl font-bold text-brand-burgundy font-serif leading-tight mb-1 truncate"
+                  className="text-lg md:text-xl font-bold text-brand-burgundy leading-tight mb-1 truncate"
                   dir="ltr"
                 >
                   {item.info}

@@ -101,7 +101,7 @@ export default function Services({ onSeeMore }: ServicesProps) {
                 <IconRenderer iconId={service.icon} className="w-8 h-8" />
               </div>
 
-              <h3 className="text-3xl font-serif text-brand-burgundy mb-6 relative z-10 group-hover:translate-x-2 transition-transform ltr:group-hover:-translate-x-2">
+              <h3 className="text-3xl text-brand-burgundy mb-6 relative z-10 group-hover:translate-x-2 transition-transform ltr:group-hover:-translate-x-2">
                 {service.title}
               </h3>
               <p className="text-brand-wine/80 leading-relaxed text-lg relative z-10">

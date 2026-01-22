@@ -53,9 +53,7 @@ export default function About({ onReadMore }: AboutProps) {
                 isRTL ? 'left-0 lg:-left-8' : 'right-0 lg:-right-8'
               } bg-brand-gold p-10 rounded-[32px] shadow-2xl hidden md:block border-4 border-white`}
             >
-              <div className="text-brand-burgundy font-serif text-5xl font-bold leading-none">
-                15+
-              </div>
+              <div className="text-brand-burgundy text-5xl font-bold leading-none">15+</div>
               <div className="text-brand-burgundy/80 text-sm font-bold mt-1 uppercase tracking-widest">
                 {t?.about?.yearsExp || 'سنوات خبرة'}
               </div>
@@ -67,7 +65,7 @@ export default function About({ onReadMore }: AboutProps) {
             <span className="text-brand-gold font-bold tracking-[0.3em] uppercase mb-6 block border-l-4 border-brand-gold pl-4 ltr:border-r-4 ltr:pl-0 ltr:pr-4 ltr:border-l-0">
               {t?.about?.legacy || 'إرثنا'}
             </span>
-            <h2 className="text-5xl md:text-6xl font-serif text-brand-burgundy mb-8 leading-[1.1]">
+            <h2 className="text-5xl md:text-6xl text-brand-burgundy mb-8 leading-[1.1]">
               {t?.about?.title || 'من نحن'}{' '}
               <span className="italic text-brand-gold block mt-2">
                 {t?.about?.titleItalic || 'مسرا'}

@@ -34,9 +34,7 @@ export default function SectionHeader({
             {tag}
           </span>
         )}
-        <h2
-          className={`text-4xl md:text-6xl font-serif mb-6 ${light ? 'text-white' : 'text-brand-burgundy'}`}
-        >
+        <h2 className={`text-4xl md:text-6xl mb-6 ${light ? 'text-white' : 'text-brand-burgundy'}`}>
           {title}
         </h2>
         {description && (

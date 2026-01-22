@@ -113,7 +113,7 @@ export default function ServicesList() {
                 </div>
 
                 <div className="p-8 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-serif text-brand-burgundy mb-4">{service.title}</h3>
+                  <h3 className="text-2xl font-bold text-brand-burgundy mb-4">{service.title}</h3>
                   <p className="text-brand-wine/70 leading-relaxed mb-6 flex-1">{service.desc}</p>
                 </div>
               </div>

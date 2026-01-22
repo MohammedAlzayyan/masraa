@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from './ScrollReveal'
 import Breadcrumb from './Breadcrumb'
-import Badge from './Badge'
 
 interface BreadcrumbItem {
   label: string
@@ -56,7 +55,7 @@ export default function PageHero({
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{
-              backgroundImage: 'radial-gradient(circle, #D4AF37 1px, transparent 1px)',
+              backgroundImage: 'radial-gradient(circle, var(--brand-gold) 1px, transparent 1px)',
               backgroundSize: '30px 30px',
             }}
           />
@@ -82,7 +81,7 @@ export default function PageHero({
 
           {/* Title */}
           <h1
-            className={`${height === 'large' ? 'text-5xl md:text-7xl lg:text-8xl' : 'text-4xl md:text-6xl lg:text-7xl'} font-serif font-medium mb-6 leading-tight drop-shadow-lg text-white`}
+            className={`${height === 'large' ? 'text-5xl md:text-7xl lg:text-8xl' : 'text-4xl md:text-6xl lg:text-7xl'} font-medium mb-6 leading-tight drop-shadow-lg text-white`}
           >
             {title}
           </h1>

@@ -29,7 +29,7 @@ export default function ContactForm() {
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-brand-burgundy/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
         <div className="relative z-10">
-          <h2 className="text-3xl font-serif text-brand-burgundy mb-2">
+          <h2 className="text-3xl text-brand-burgundy mb-2">
             {isRTL ? 'أرسل لنا رسالة' : 'Send us a Message'}
           </h2>
           <p className="text-brand-wine/60 mb-8">
