@@ -113,6 +113,7 @@ export interface HotelsTranslations {
   ctaConsultant: string
   tag: string
   title: string
+  featuredTitle: string
   desc: string
   viewAll: string
   starting: string
@@ -133,6 +134,7 @@ export interface PackagesTranslations {
   heroDesc: string
   tag: string
   title: string
+  featuredTitle: string
   desc: string
   select: string
   from: string
