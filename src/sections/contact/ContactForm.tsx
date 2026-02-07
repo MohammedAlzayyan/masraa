@@ -5,7 +5,8 @@ import { Send, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import Button from '@/components/ui/Button'
-import { submitContactRequest, ActionState } from '@/actions/contact'
+import { submitContactRequest } from '@/actions/contact'
+import { ActionState } from '@/types/actions'
 
 const initialState: ActionState = {}
 

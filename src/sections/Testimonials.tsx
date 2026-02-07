@@ -17,21 +17,21 @@ export default function Testimonials({ initialTestimonials = [] }: TestimonialsP
 
   const items = initialTestimonials.length > 0 ? initialTestimonials : []
 
-  const next = () => {
+  const next = React.useCallback(() => {
     if (items.length === 0) return
     setActiveIndex((prev) => (prev + 1) % items.length)
-  }
+  }, [items.length])
 
-  const prev = () => {
+  const prev = React.useCallback(() => {
     if (items.length === 0) return
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length)
-  }
+  }, [items.length])
 
   useEffect(() => {
     if (items.length <= 1) return
     const interval = setInterval(next, 6000)
     return () => clearInterval(interval)
-  }, [items.length])
+  }, [items.length, next])
 
   if (items.length === 0) return null
 
