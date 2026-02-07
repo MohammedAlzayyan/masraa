@@ -1,27 +1,60 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-import { MapPin, Star, Search, ArrowRight, ArrowLeft } from 'lucide-react'
+import { MapPin, Star, Search, ArrowRight, ArrowLeft, Calendar, Users, X } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
-import { HOTELS } from '@/lib/constants'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
+import type { Hotel as PayloadHotel, Media } from '@/payload-types'
 
-export default function HotelListing() {
-  const { t, isRTL } = useLanguage()
+interface HotelListingProps {
+  initialHotels?: PayloadHotel[]
+}
+
+export default function HotelListing({ initialHotels = [] }: HotelListingProps) {
+  const { t, isRTL, language } = useLanguage()
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCity, setSelectedCity] = useState<'all' | 'makkah' | 'madinah'>('all')
+  const [selectedCity, setSelectedCity] = useState<'all' | 'Makkah' | 'Madinah'>('all')
+
+  // Helper to update URL params
+  const updateUrlParam = (key: string, value: string | null) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (value && value !== 'all') {
+      params.set(key, value)
+    } else {
+      params.delete(key)
+    }
+    router.push(`?${params.toString()}`, { scroll: false })
+  }
+
+  // Search parameter states for summary
+  const hasSearch = searchParams.get('search') === 'true'
+  const checkin = searchParams.get('checkin')
+  const checkout = searchParams.get('checkout')
+  const adults = searchParams.get('adults')
+  const children = searchParams.get('children')
+  const rooms = searchParams.get('rooms')
+
+  // Initialize state from URL search parameters
+  useEffect(() => {
+    const destination = searchParams.get('destination')
+    if (destination === 'Makkah' || destination === 'Madinah') {
+      setSelectedCity(destination)
+    } else {
+      setSelectedCity('all')
+    }
+  }, [searchParams])
 
   // Filter hotels based on search and city
   const filteredHotels = useMemo(() => {
-    return HOTELS.filter((hotel) => {
-      const matchesCity =
-        selectedCity === 'all' ||
-        (selectedCity === 'makkah' && hotel.location.toLowerCase() === 'makkah') ||
-        (selectedCity === 'madinah' && hotel.location.toLowerCase() === 'madinah')
+    return initialHotels.filter((hotel) => {
+      const matchesCity = selectedCity === 'all' || hotel.location === selectedCity
 
       const matchesSearch =
         hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -31,7 +64,7 @@ export default function HotelListing() {
 
       return matchesCity && matchesSearch
     })
-  }, [selectedCity, searchQuery, t])
+  }, [selectedCity, searchQuery, t, initialHotels])
 
   const getTranslatedName = (name: string) => {
     return t?.hotels?.names?.[name as keyof typeof t.hotels.names] || name
@@ -39,6 +72,11 @@ export default function HotelListing() {
 
   const getTranslatedTag = (tag: string) => {
     return t?.hotels?.tags?.[tag as keyof typeof t.hotels.tags] || tag
+  }
+
+  const getImageUrl = (image: string | Media) => {
+    if (typeof image === 'string') return image
+    return image.url || ''
   }
 
   return (
@@ -63,17 +101,20 @@ export default function HotelListing() {
 
             {/* City Filter Tabs */}
             <div className="flex bg-brand-beige/10 p-1.5 rounded-2xl w-full md:w-auto">
-              {(['all', 'makkah', 'madinah'] as const).map((city) => (
+              {(['all', 'Makkah', 'Madinah'] as const).map((city) => (
                 <Button
                   key={city}
                   variant={selectedCity === city ? 'secondary' : 'ghost'}
                   size="md"
-                  onClick={() => setSelectedCity(city)}
+                  onClick={() => {
+                    setSelectedCity(city)
+                    updateUrlParam('destination', city)
+                  }}
                   className={`flex-1 md:flex-none ${selectedCity === city ? 'bg-white shadow-md' : 'text-brand-wine/50 hover:text-brand-burgundy'}`}
                 >
                   {city === 'all'
                     ? t?.hotels?.allCities || 'كل المدن'
-                    : city === 'makkah'
+                    : city === 'Makkah'
                       ? t?.hero?.makkah || 'مكة المكرمة'
                       : t?.hero?.madinah || 'المدينة المنورة'}
                 </Button>
@@ -81,6 +122,56 @@ export default function HotelListing() {
             </div>
           </div>
         </ScrollReveal>
+
+        {/* Search Summary Bar */}
+        {hasSearch && (
+          <ScrollReveal animation="fade-in" className="mb-12">
+            <div className="flex flex-wrap items-center gap-4 bg-brand-burgundy/5 border border-brand-burgundy/10 px-6 py-4 rounded-3xl">
+              <div className="flex items-center gap-2 text-brand-burgundy font-bold text-sm">
+                <Search className="w-4 h-4" />
+                <span>{isRTL ? 'نتائج البحث لـ:' : 'Search results for:'}</span>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {checkin && (
+                  <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-brand-gold/20 text-xs font-bold text-brand-burgundy shadow-sm">
+                    <Calendar className="w-3.5 h-3.5 text-brand-gold" />
+                    <span>
+                      {new Date(checkin).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                      {checkout &&
+                        ` - ${new Date(checkout).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', { month: 'short', day: 'numeric' })}`}
+                    </span>
+                  </div>
+                )}
+
+                {(adults || children || rooms) && (
+                  <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-brand-gold/20 text-xs font-bold text-brand-burgundy shadow-sm">
+                    <Users className="w-3.5 h-3.5 text-brand-gold" />
+                    <span>
+                      {adults && `${adults} ${t?.hero?.adults || 'بالغ'}`}
+                      {children && `, ${children} ${t?.hero?.children || 'طفل'}`}
+                      {rooms && ` | ${rooms} ${t?.hero?.rooms || 'غرفة'}`}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  router.push('?', { scroll: false })
+                  setSelectedCity('all')
+                }}
+                className={`${isRTL ? 'mr-auto' : 'ml-auto'} flex items-center gap-2 text-brand-wine/50 hover:text-brand-burgundy transition-colors text-xs font-bold group`}
+              >
+                <X className="w-4 h-4 group-hover:rotate-90 transition-transform" />
+                <span>{isRTL ? 'إلغاء الفلترة' : 'Clear Filters'}</span>
+              </button>
+            </div>
+          </ScrollReveal>
+        )}
 
         {/* Hotels Grid */}
         {filteredHotels.length > 0 ? (
@@ -95,7 +186,7 @@ export default function HotelListing() {
                 {/* Image */}
                 <div className="relative h-72 overflow-hidden">
                   <Image
-                    src={hotel.image}
+                    src={getImageUrl(hotel.image)}
                     alt={getTranslatedName(hotel.name)}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700 image-zoom"
@@ -126,12 +217,12 @@ export default function HotelListing() {
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {hotel.tags.slice(0, 3).map((tag, i) => (
+                    {hotel.tags?.slice(0, 3).map((tagItem, i) => (
                       <span
-                        key={i}
+                        key={tagItem.id || i}
                         className="text-[10px] bg-brand-beige/20 text-brand-wine/70 px-2 py-1 rounded-md font-bold"
                       >
-                        {getTranslatedTag(tag)}
+                        {tagItem.tag ? getTranslatedTag(tagItem.tag) : ''}
                       </span>
                     ))}
                   </div>

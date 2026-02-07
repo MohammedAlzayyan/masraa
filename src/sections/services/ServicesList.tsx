@@ -3,66 +3,26 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Hotel, Car, Plane, Map, Headset, Users, ArrowRight, ArrowLeft } from 'lucide-react'
+import * as LucideIcons from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import SectionHeader from '@/components/ui/SectionHeader'
+import type { Service as PayloadService, Media } from '@/payload-types'
+import IconRenderer from '@/components/ui/IconRenderer'
 
-export default function ServicesList() {
+interface ServicesListProps {
+  initialServices?: PayloadService[]
+}
+
+export default function ServicesList({ initialServices = [] }: ServicesListProps) {
   const { t, isRTL } = useLanguage()
 
-  const services = [
-    {
-      id: 's1',
-      title: t?.services?.s1Title || 'حجوزات الفنادق',
-      desc:
-        t?.services?.s1Desc ||
-        'فنادق فاخرة بإطلالات على الحرم، خيارات متنوعة تناسب جميع الميزانيات.',
-      icon: Hotel,
-      image:
-        'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      id: 's2',
-      title: t?.services?.s2Title || 'النقل والمواصلات',
-      desc: t?.services?.s2Desc || 'استقبال من وإلى المطار، سيارات خاصة ومكيفة، وسائقون محترفون.',
-      icon: Car,
-      image:
-        'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      id: 's3',
-      title: t?.services?.s3Title || 'الحج والعمرة', // Corrected key slightly for display
-      desc: t?.services?.s3Desc || 'باقات متكاملة تشمل الإقامة والتنقلات المريحة بإشراف كامل.',
-      icon: Plane, // Changed icon for variety
-      image:
-        'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      id: 's4',
-      title: t?.services?.s4Title || 'البرامج السياحية',
-      desc: t?.services?.s4Desc || 'جولات تاريخية ودينية مع مرشدين سياحيين محترفين.',
-      icon: Map,
-      image:
-        'https://images.unsplash.com/photo-1580418827493-f2b22c431630?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      id: 's5',
-      title: t?.services?.s5Title || 'خدمة العملاء',
-      desc: t?.services?.s5Desc || 'دعم على مدار الساعة، استشارات سياحية، ومتابعة الرحلات.',
-      icon: Headset,
-      image:
-        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      id: 's7',
-      title: t?.services?.s7Title || 'خدمات الشركات',
-      desc: t?.services?.s7Desc || 'ترتيبات سفر للوفود الرسمية وحلول سفر متكاملة للشركات.',
-      icon: Users,
-      image:
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop',
-    },
-  ]
+  const getImageUrl = (image?: string | Media | null) => {
+    if (!image)
+      return 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop'
+    if (typeof image === 'string') return image
+    return image.url || ''
+  }
 
   return (
     <section className="py-24 bg-brand-beige/5">
@@ -77,7 +37,7 @@ export default function ServicesList() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, idx) => (
+          {initialServices.map((service, idx) => (
             <ScrollReveal
               key={service.id}
               animation="fade-up"
@@ -87,7 +47,7 @@ export default function ServicesList() {
               <div className="bg-white rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full border border-brand-gold/10 flex flex-col hover:-translate-y-2 card-hover">
                 <div className="relative h-64 overflow-hidden">
                   <Image
-                    src={service.image}
+                    src={getImageUrl(service.image)}
                     alt={service.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700 image-zoom"
@@ -95,26 +55,28 @@ export default function ServicesList() {
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                     <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                       <Link
-                        href="/contact"
+                        href={`/services/${service.slug}`}
                         className="flex items-center gap-2 font-bold hover:text-brand-gold transition-colors"
                       >
-                        <span>{isRTL ? 'استفسر الآن' : 'Inquire Now'}</span>
+                        <span>{isRTL ? 'عرض التفاصيل' : 'View Details'}</span>
                         {isRTL ? (
-                          <ArrowLeft className="w-4 h-4" />
+                          <LucideIcons.ArrowLeft className="w-4 h-4" />
                         ) : (
-                          <ArrowRight className="w-4 h-4" />
+                          <LucideIcons.ArrowRight className="w-4 h-4" />
                         )}
                       </Link>
                     </div>
                   </div>
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-2xl p-3 shadow-lg">
-                    <service.icon className="w-6 h-6 text-brand-burgundy" />
+                    <IconRenderer iconId={service.icon} className="w-6 h-6 text-brand-burgundy" />
                   </div>
                 </div>
 
                 <div className="p-8 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold text-brand-burgundy mb-4">{service.title}</h3>
-                  <p className="text-brand-wine/70 leading-relaxed mb-6 flex-1">{service.desc}</p>
+                  <p className="text-brand-wine/70 leading-relaxed mb-6 flex-1">
+                    {service.description}
+                  </p>
                 </div>
               </div>
             </ScrollReveal>

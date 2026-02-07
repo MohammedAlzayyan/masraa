@@ -4,22 +4,31 @@ import React, { useState, useMemo } from 'react'
 import Image from 'next/image'
 import { Calendar, CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
-import { PACKAGES } from '@/lib/constants'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
+import type { Package as PayloadPackage, Media } from '@/payload-types'
 
-export default function PackageListing() {
+interface PackageListingProps {
+  initialPackages?: PayloadPackage[]
+}
+
+export default function PackageListing({ initialPackages = [] }: PackageListingProps) {
   const { t, isRTL } = useLanguage()
   const [selectedType, setSelectedType] = useState<'all' | 'Hajj' | 'Umrah' | 'Cultural'>('all')
 
   const filteredPackages = useMemo(() => {
-    if (selectedType === 'all') return PACKAGES
-    return PACKAGES.filter((pkg) => pkg.type === selectedType)
-  }, [selectedType])
+    if (selectedType === 'all') return initialPackages
+    return initialPackages.filter((pkg) => pkg.type === selectedType)
+  }, [selectedType, initialPackages])
 
   const getTranslatedName = (name: string) => {
     return t?.packages?.names?.[name as keyof typeof t.packages.names] || name
+  }
+
+  const getImageUrl = (image: string | Media) => {
+    if (typeof image === 'string') return image
+    return image.url || ''
   }
 
   return (
@@ -64,7 +73,7 @@ export default function PackageListing() {
               {/* Image Side */}
               <div className="relative w-full lg:w-2/5 min-h-[300px] overflow-hidden">
                 <Image
-                  src={pkg.image}
+                  src={getImageUrl(pkg.image)}
                   alt={getTranslatedName(pkg.name)}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700 image-zoom"
@@ -99,10 +108,13 @@ export default function PackageListing() {
                   <p className="text-xs font-bold text-brand-wine/40 uppercase tracking-widest mb-2">
                     {t?.packages?.includes || 'تشمل الباقة'}:
                   </p>
-                  {pkg.includes.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 text-brand-wine/70 text-sm">
+                  {pkg.includes?.map((item, i) => (
+                    <div
+                      key={item.id || i}
+                      className="flex items-center gap-3 text-brand-wine/70 text-sm"
+                    >
                       <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
-                      <span>{item}</span>
+                      <span>{item.benefit}</span>
                     </div>
                   ))}
                 </div>

@@ -9,12 +9,14 @@ import IconRenderer from '@/components/ui/IconRenderer'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Button from '@/components/ui/Button'
+import type { Service as PayloadService } from '@/payload-types'
 
 interface ServicesProps {
   onSeeMore?: () => void
+  initialServices?: PayloadService[]
 }
 
-export default function Services({ onSeeMore }: ServicesProps) {
+export default function Services({ onSeeMore, initialServices = [] }: ServicesProps) {
   const router = useRouter()
   const { t, isRTL } = useLanguage()
 
@@ -25,45 +27,6 @@ export default function Services({ onSeeMore }: ServicesProps) {
       router.push('/services')
     }
   }
-
-  const servicesList = [
-    {
-      id: 's1',
-      title: t?.services?.s1Title || 'حجوزات الفنادق',
-      desc: t?.services?.s1Desc || 'أفضل الفنادق بالقرب من الحرمين الشريفين',
-      icon: 'hotel',
-    },
-    {
-      id: 's2',
-      title: t?.services?.s2Title || 'النقل والمواصلات',
-      desc: t?.services?.s2Desc || 'خدمات نقل مريحة وآمنة',
-      icon: 'car',
-    },
-    {
-      id: 's3',
-      title: t?.services?.s3Title || 'الباقات المميزة',
-      desc: t?.services?.s3Desc || 'باقات سياحية متكاملة',
-      icon: 'gem',
-    },
-    {
-      id: 's4',
-      title: t?.services?.s4Title || 'الرحلات السياحية',
-      desc: t?.services?.s4Desc || 'جولات سياحية منظمة',
-      icon: 'map',
-    },
-    {
-      id: 's5',
-      title: t?.services?.s5Title || 'الدعم على مدار الساعة',
-      desc: t?.services?.s5Desc || 'فريق دعم متاح 24/7',
-      icon: 'headset',
-    },
-    {
-      id: 's6',
-      title: t?.services?.s6Title || 'خدمات الحج والعمرة',
-      desc: t?.services?.s6Desc || 'خدمات متخصصة للحج والعمرة',
-      icon: 'building',
-    },
-  ]
 
   return (
     <section id="services" className="py-24 bg-brand-beige/10">
@@ -90,7 +53,7 @@ export default function Services({ onSeeMore }: ServicesProps) {
           delay={0.2}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          {servicesList.map((service) => (
+          {initialServices.map((service) => (
             <div
               key={service.id}
               className="bg-white p-12 rounded-[48px] shadow-xl shadow-brand-burgundy/5 border border-brand-gold/10 hover:border-brand-gold hover:shadow-brand-gold/10 transition-all duration-500 group relative overflow-hidden"
@@ -105,7 +68,7 @@ export default function Services({ onSeeMore }: ServicesProps) {
                 {service.title}
               </h3>
               <p className="text-brand-wine/80 leading-relaxed text-lg relative z-10">
-                {service.desc}
+                {service.description}
               </p>
             </div>
           ))}

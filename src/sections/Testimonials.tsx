@@ -3,22 +3,37 @@
 import React, { useState, useEffect } from 'react'
 import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
-import { TESTIMONIALS } from '@/lib/constants'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import SectionHeader from '@/components/ui/SectionHeader'
+import type { Testimonial as PayloadTestimonial } from '@/payload-types'
 
-export default function Testimonials() {
+interface TestimonialsProps {
+  initialTestimonials?: PayloadTestimonial[]
+}
+
+export default function Testimonials({ initialTestimonials = [] }: TestimonialsProps) {
   const { t, isRTL } = useLanguage()
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const next = () => setActiveIndex((prev) => (prev + 1) % TESTIMONIALS.length)
-  const prev = () =>
-    setActiveIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)
+  const items = initialTestimonials.length > 0 ? initialTestimonials : []
+
+  const next = () => {
+    if (items.length === 0) return
+    setActiveIndex((prev) => (prev + 1) % items.length)
+  }
+
+  const prev = () => {
+    if (items.length === 0) return
+    setActiveIndex((prev) => (prev - 1 + items.length) % items.length)
+  }
 
   useEffect(() => {
+    if (items.length <= 1) return
     const interval = setInterval(next, 6000)
     return () => clearInterval(interval)
-  }, [])
+  }, [items.length])
+
+  if (items.length === 0) return null
 
   return (
     <section className="py-24 bg-brand-beige/5 overflow-hidden">
@@ -37,7 +52,7 @@ export default function Testimonials() {
                 transform: `translateX(${activeIndex * (isRTL ? 100 : -100)}%)`,
               }}
             >
-              {TESTIMONIALS.map((testi) => (
+              {items.map((testi) => (
                 <div key={testi.id} className="w-full flex-shrink-0 px-4">
                   <div className="bg-white p-10 md:p-16 rounded-[60px] shadow-2xl shadow-brand-burgundy/5 relative overflow-hidden group border border-brand-gold/5 transition-all duration-500 h-full">
                     <Quote
@@ -76,31 +91,33 @@ export default function Testimonials() {
           </div>
 
           {/* Controls */}
-          <div className="flex items-center justify-center gap-6 mt-12">
-            <button
-              onClick={prev}
-              className="w-14 h-14 rounded-full border border-brand-gold/30 text-brand-burgundy flex items-center justify-center hover:bg-brand-burgundy hover:text-white hover:border-brand-burgundy transition-all shadow-lg"
-            >
-              {isRTL ? <ChevronRight className="w-6 h-6" /> : <ChevronLeft className="w-6 h-6" />}
-            </button>
+          {items.length > 1 && (
+            <div className="flex items-center justify-center gap-6 mt-12">
+              <button
+                onClick={prev}
+                className="w-14 h-14 rounded-full border border-brand-gold/30 text-brand-burgundy flex items-center justify-center hover:bg-brand-burgundy hover:text-white hover:border-brand-burgundy transition-all shadow-lg"
+              >
+                {isRTL ? <ChevronRight className="w-6 h-6" /> : <ChevronLeft className="w-6 h-6" />}
+              </button>
 
-            <div className="flex gap-2">
-              {TESTIMONIALS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveIndex(i)}
-                  className={`h-2 rounded-full transition-all duration-500 ${activeIndex === i ? 'w-8 bg-brand-gold' : 'w-2 bg-brand-gold/30'}`}
-                />
-              ))}
+              <div className="flex gap-2">
+                {items.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveIndex(i)}
+                    className={`h-2 rounded-full transition-all duration-500 ${activeIndex === i ? 'w-8 bg-brand-gold' : 'w-2 bg-brand-gold/30'}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={next}
+                className="w-14 h-14 rounded-full border border-brand-gold/30 text-brand-burgundy flex items-center justify-center hover:bg-brand-burgundy hover:text-white hover:border-brand-burgundy transition-all shadow-lg"
+              >
+                {isRTL ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
+              </button>
             </div>
-
-            <button
-              onClick={next}
-              className="w-14 h-14 rounded-full border border-brand-gold/30 text-brand-burgundy flex items-center justify-center hover:bg-brand-burgundy hover:text-white hover:border-brand-burgundy transition-all shadow-lg"
-            >
-              {isRTL ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
-            </button>
-          </div>
+          )}
         </ScrollReveal>
       </div>
     </section>

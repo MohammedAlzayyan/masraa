@@ -5,10 +5,7 @@ import Link from 'next/link'
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 
-export interface BreadcrumbItem {
-  label: string
-  href?: string
-}
+import { BreadcrumbItem } from '@/types/components'
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[]

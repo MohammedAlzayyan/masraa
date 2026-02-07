@@ -1,4 +1,4 @@
-import { Hotel, Service, Package, Testimonial } from '@/types/types'
+import { Hotel, Service, Package, Testimonial } from '@/types/models'
 
 export const HOTELS: Hotel[] = [
   {

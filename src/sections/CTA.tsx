@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
@@ -31,22 +32,26 @@ export default function CTA() {
             {t?.cta?.desc || 'احجز رحلتك الآن واستمتع بخدمات سياحية مميزة مع ضمان الجودة والأمان'}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-            <Button
-              variant="gold"
-              size="xl"
-              icon={isRTL ? ArrowLeft : ArrowRight}
-              iconPosition="right"
-              className="px-12 py-6 rounded-full"
-            >
-              {t?.cta?.btn || 'احجز الآن'}
-            </Button>
-            <Button
-              variant="outline"
-              size="xl"
-              className="px-12 py-6 rounded-full border-white/20 text-white hover:border-brand-gold hover:text-brand-gold"
-            >
-              {t?.cta?.consult || 'استشارة مجانية'}
-            </Button>
+            <Link href="/hotels">
+              <Button
+                variant="gold"
+                size="xl"
+                icon={isRTL ? ArrowLeft : ArrowRight}
+                iconPosition="right"
+                className="px-12 py-6 rounded-full"
+              >
+                {t?.cta?.btn || 'احجز الآن'}
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button
+                variant="outline"
+                size="xl"
+                className="px-12 py-6 rounded-full border-white/20 text-white hover:border-brand-gold hover:text-brand-gold"
+              >
+                {t?.cta?.consult || 'استشارة مجانية'}
+              </Button>
+            </Link>
           </div>
         </div>
       </ScrollReveal>

@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import {
   Search,
   MapPin,
@@ -16,6 +17,7 @@ import {
 import { useLanguage } from '@/components/providers/LanguageProvider'
 
 export default function Hero() {
+  const router = useRouter()
   const { t, isRTL, language } = useLanguage()
   const [destination, setDestination] = useState('')
   const [isDestOpen, setIsDestOpen] = useState(false)
@@ -56,17 +58,56 @@ export default function Hero() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const updateGuest = (type: 'adults' | 'children' | 'rooms', delta: number) => {
+  const updateGuest = useCallback((type: 'adults' | 'children' | 'rooms', delta: number) => {
     setGuests((prev) => ({
       ...prev,
       [type]: Math.max(type === 'children' ? 0 : 1, prev[type] + delta),
     }))
-  }
+  }, [])
 
-  const destinations = [
-    { name: t?.hero?.makkah || 'مكة المكرمة', value: 'makkah' },
-    { name: t?.hero?.madinah || 'المدينة المنورة', value: 'madinah' },
-  ]
+  const handleSearch = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault()
+
+      const params = new URLSearchParams()
+
+      // Add a search flag as requested by user ("search=")
+      params.set('search', 'true')
+
+      if (destination) {
+        params.set('destination', destination)
+      }
+
+      if (dateRange.start) {
+        // Use local date format YYYY-MM-DD to avoid timezone shifts from toISOString
+        const formatDate = (date: Date) => {
+          const year = date.getFullYear()
+          const month = String(date.getMonth() + 1).padStart(2, '0')
+          const day = String(date.getDate()).padStart(2, '0')
+          return `${year}-${month}-${day}`
+        }
+        params.set('checkin', formatDate(dateRange.start))
+        if (dateRange.end) {
+          params.set('checkout', formatDate(dateRange.end))
+        }
+      }
+
+      params.set('adults', guests.adults.toString())
+      params.set('children', guests.children.toString())
+      params.set('rooms', guests.rooms.toString())
+
+      router.push(`/hotels?${params.toString()}`)
+    },
+    [router, destination, dateRange, guests],
+  )
+
+  const destinations = useMemo(
+    () => [
+      { name: t?.hero?.makkah || 'مكة المكرمة', value: 'makkah' },
+      { name: t?.hero?.madinah || 'المدينة المنورة', value: 'madinah' },
+    ],
+    [t],
+  )
 
   const changeMonth = (offset: number) => {
     const newDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + offset, 1)
@@ -101,8 +142,8 @@ export default function Hero() {
       <div className="flex-1 min-w-[280px]">
         <div className="text-center font-bold text-brand-burgundy mb-4">{monthName}</div>
         <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-black text-brand-wine/40 mb-2">
-          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d) => (
-            <div key={d}>{d}</div>
+          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, idx) => (
+            <div key={`${d}-${idx}`}>{d}</div>
           ))}
         </div>
         <div className="grid grid-cols-7 gap-1">
@@ -121,13 +162,13 @@ export default function Hero() {
                 key={i}
                 onClick={() => {
                   if (isPast) return
-                  if (!dateRange.start || (dateRange.start && dateRange.end)) {
+                  if (!dateRange.start) {
                     setDateRange({ start: d, end: null })
                   } else if (d > dateRange.start) {
+                    // Update departure if clicking after arrival, even if departure was already set
                     setDateRange({ ...dateRange, end: d })
-                    // Briefly show selection before closing
-                    setTimeout(() => setIsDateOpen(false), 400)
                   } else {
+                    // Reset and set new arrival if clicking before or on current arrival
                     setDateRange({ start: d, end: null })
                   }
                 }}
@@ -149,9 +190,17 @@ export default function Hero() {
     )
   }
 
-  const formattedDates = dateRange.start
-    ? `${dateRange.start.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', { month: 'short', day: 'numeric' })}${dateRange.end ? ' - ' + dateRange.end.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', { month: 'short', day: 'numeric' }) : ''}`
-    : t?.hero?.datesPlaceholder || 'اختر التواريخ'
+  const formattedDates = useMemo(() => {
+    if (!dateRange.start) return t?.hero?.datesPlaceholder || 'اختر التواريخ'
+
+    const locale = language === 'ar' ? 'ar-SA' : 'en-US'
+    const start = dateRange.start.toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+    const end = dateRange.end
+      ? ' - ' + dateRange.end.toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+      : ''
+
+    return `${start}${end}`
+  }, [dateRange, language, t])
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-40 pb-20 md:pt-48 md:pb-24">
@@ -183,10 +232,7 @@ export default function Hero() {
 
         {/* Search Widget - Ensure it has high z-index and overflow works for child dropdowns */}
         <div className="w-full max-w-5xl glass-card rounded-[32px] p-4 md:p-3 shadow-2xl animate-fadeIn delay-300 relative z-50">
-          <form
-            className="flex flex-col lg:flex-row items-center gap-3"
-            onSubmit={(e) => e.preventDefault()}
-          >
+          <form className="flex flex-col lg:flex-row items-center gap-3" onSubmit={handleSearch}>
             {/* Destination Dropdown */}
             <div className="flex-1 w-full relative" ref={destRef}>
               <div
@@ -309,6 +355,7 @@ export default function Hero() {
                     </div>
                     <div className="flex gap-4">
                       <button
+                        type="button"
                         onClick={() => {
                           setDateRange({ start: null, end: null })
                         }}
@@ -317,6 +364,7 @@ export default function Hero() {
                         {isRTL ? 'إعادة تعيين' : 'Reset'}
                       </button>
                       <button
+                        type="button"
                         onClick={() => setIsDateOpen(false)}
                         className="bg-brand-burgundy text-white px-8 py-2 rounded-xl text-sm font-bold shadow-lg hover:bg-brand-wine active:scale-95 transition-all"
                       >
@@ -367,6 +415,7 @@ export default function Hero() {
                       </div>
                       <div className="flex items-center gap-4 bg-brand-beige/10 p-1.5 rounded-full border border-brand-gold/10">
                         <button
+                          type="button"
                           onClick={() => updateGuest('adults', -1)}
                           className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 text-brand-burgundy flex items-center justify-center hover:bg-brand-gold hover:text-white transition-all shadow-sm active:scale-95"
                         >
@@ -376,6 +425,7 @@ export default function Hero() {
                           {guests.adults}
                         </span>
                         <button
+                          type="button"
                           onClick={() => updateGuest('adults', 1)}
                           className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 text-brand-burgundy flex items-center justify-center hover:bg-brand-gold hover:text-white transition-all shadow-sm active:scale-95"
                         >
@@ -394,6 +444,7 @@ export default function Hero() {
                       </div>
                       <div className="flex items-center gap-4 bg-brand-beige/10 p-1.5 rounded-full border border-brand-gold/10">
                         <button
+                          type="button"
                           onClick={() => updateGuest('children', -1)}
                           className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 text-brand-burgundy flex items-center justify-center hover:bg-brand-gold hover:text-white transition-all shadow-sm active:scale-95"
                         >
@@ -403,6 +454,7 @@ export default function Hero() {
                           {guests.children}
                         </span>
                         <button
+                          type="button"
                           onClick={() => updateGuest('children', 1)}
                           className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 text-brand-burgundy flex items-center justify-center hover:bg-brand-gold hover:text-white transition-all shadow-sm active:scale-95"
                         >
@@ -418,6 +470,7 @@ export default function Hero() {
                       </div>
                       <div className="flex items-center gap-4 bg-brand-beige/10 p-1.5 rounded-full border border-brand-gold/10">
                         <button
+                          type="button"
                           onClick={() => updateGuest('rooms', -1)}
                           className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 text-brand-burgundy flex items-center justify-center hover:bg-brand-gold hover:text-white transition-all shadow-sm active:scale-95"
                         >
@@ -427,6 +480,7 @@ export default function Hero() {
                           {guests.rooms}
                         </span>
                         <button
+                          type="button"
                           onClick={() => updateGuest('rooms', 1)}
                           className="w-10 h-10 rounded-full bg-white border border-brand-gold/20 text-brand-burgundy flex items-center justify-center hover:bg-brand-gold hover:text-white transition-all shadow-sm active:scale-95"
                         >
@@ -436,6 +490,7 @@ export default function Hero() {
                     </div>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setIsGuestOpen(false)}
                     className="w-full mt-10 bg-brand-burgundy text-white py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-brand-wine transition-all shadow-xl active:scale-95"
                   >

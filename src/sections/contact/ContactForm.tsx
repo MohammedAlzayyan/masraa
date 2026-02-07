@@ -1,25 +1,24 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useActionState, useEffect, useState } from 'react'
 import { Send, CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '@/components/providers/LanguageProvider'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import Button from '@/components/ui/Button'
+import { submitContactRequest, ActionState } from '@/actions/contact'
+
+const initialState: ActionState = {}
 
 export default function ContactForm() {
   const { isRTL } = useLanguage()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [state, formAction, isPending] = useActionState(submitContactRequest, initialState)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
+  useEffect(() => {
+    if (state.success) {
       setIsSuccess(true)
-    }, 2000)
-  }
+    }
+  }, [state])
 
   return (
     <ScrollReveal animation="fade-up" className="h-full">
@@ -38,6 +37,12 @@ export default function ContactForm() {
               : 'We are here to answer all your inquiries'}
           </p>
 
+          {state.error && (
+            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-xl border border-red-100 text-sm">
+              {state.error}
+            </div>
+          )}
+
           {isSuccess ? (
             <div className="bg-green-50 rounded-3xl p-8 text-center animate-in fade-in zoom-in duration-500">
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
@@ -47,9 +52,10 @@ export default function ContactForm() {
                 {isRTL ? 'تم الإرسال بنجاح!' : 'Sent Successfully!'}
               </h3>
               <p className="text-green-700">
-                {isRTL
-                  ? 'شكراً لتواصلك معنا، سنرد عليك قريباً.'
-                  : 'Thank you for contacting us, we will reply shortly.'}
+                {state.message ||
+                  (isRTL
+                    ? 'شكراً لتواصلك معنا، سنرد عليك قريباً.'
+                    : 'Thank you for contacting us, we will reply shortly.')}
               </p>
               <button
                 onClick={() => setIsSuccess(false)}
@@ -59,7 +65,7 @@ export default function ContactForm() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form action={formAction} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-brand-burgundy uppercase tracking-wider">
@@ -67,6 +73,7 @@ export default function ContactForm() {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     required
                     className="w-full bg-brand-beige/10 border-transparent rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold/20 transition-all placeholder:text-brand-wine/30"
                     placeholder={isRTL ? 'الاسم الكامل' : 'Full Name'}
@@ -78,6 +85,7 @@ export default function ContactForm() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     className="w-full bg-brand-beige/10 border-transparent rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold/20 transition-all placeholder:text-brand-wine/30"
                     placeholder="name@example.com"
@@ -89,7 +97,10 @@ export default function ContactForm() {
                 <label className="text-sm font-bold text-brand-burgundy uppercase tracking-wider">
                   {isRTL ? 'الموضوع' : 'Subject'}
                 </label>
-                <select className="w-full bg-brand-beige/10 border-transparent rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold/20 transition-all text-brand-burgundy cursor-pointer">
+                <select
+                  name="subject"
+                  className="w-full bg-brand-beige/10 border-transparent rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold/20 transition-all text-brand-burgundy cursor-pointer"
+                >
                   <option value="general">{isRTL ? 'استفسار عام' : 'General Inquiry'}</option>
                   <option value="booking">{isRTL ? 'حجوزات' : 'Bookings'}</option>
                   <option value="partners">{isRTL ? 'شراكات' : 'Partnership'}</option>
@@ -102,6 +113,7 @@ export default function ContactForm() {
                   {isRTL ? 'الرسالة' : 'Message'}
                 </label>
                 <textarea
+                  name="message"
                   required
                   rows={4}
                   className="w-full bg-brand-beige/10 border-transparent rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-brand-gold/20 focus:border-brand-gold/20 transition-all placeholder:text-brand-wine/30 resize-none"
@@ -111,7 +123,7 @@ export default function ContactForm() {
 
               <Button
                 type="submit"
-                isLoading={isSubmitting}
+                isLoading={isPending}
                 className="w-full py-4"
                 icon={Send}
                 iconPosition="right"

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Hotel, Car, Gem, Map, Headphones, Building2, LucideIcon } from 'lucide-react'
+import { Hotel, Car, Gem, Map, Headphones, Building2, Plane, Users, LucideIcon } from 'lucide-react'
 
 interface IconRendererProps {
   iconId: string
@@ -15,6 +15,8 @@ const iconMap: Record<string, LucideIcon> = {
   map: Map,
   headset: Headphones,
   building: Building2,
+  plane: Plane,
+  users: Users,
 }
 
 export default function IconRenderer({ iconId, className }: IconRendererProps) {
