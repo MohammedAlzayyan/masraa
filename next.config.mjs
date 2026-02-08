@@ -18,6 +18,12 @@ const nextConfig = {
       '.mjs': ['.mts', '.mjs'],
     }
 
+    webpackConfig.module = {
+      ...webpackConfig.module,
+      exprContextCritical: false,
+      unknownContextCritical: false,
+    }
+
     return webpackConfig
   },
 }
