@@ -10,7 +10,7 @@ import AboutFeatures from '@/sections/about/AboutFeatures'
 import AboutValues from '@/sections/about/AboutValues'
 
 export default function AboutPage() {
-  const { t, isRTL } = useLanguage()
+  const { t } = useLanguage()
 
   const breadcrumbItems = [{ label: t?.nav?.about || 'من نحن' }]
 

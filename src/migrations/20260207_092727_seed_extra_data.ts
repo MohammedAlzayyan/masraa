@@ -37,7 +37,7 @@ export async function up({ payload, req: _req, session: _session }: MigrateUpArg
       data: {
         ...service,
         image: placeholderMediaId,
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     })
   }
 
@@ -96,7 +96,7 @@ export async function up({ payload, req: _req, session: _session }: MigrateUpArg
       data: {
         ...hotel,
         image: placeholderMediaId,
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     })
   }
 

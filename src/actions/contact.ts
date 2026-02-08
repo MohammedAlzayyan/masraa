@@ -5,13 +5,6 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-interface ContactFormData {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
-
 import { ActionState } from '@/types/actions'
 
 export async function submitContactRequest(

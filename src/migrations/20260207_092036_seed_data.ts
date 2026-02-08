@@ -79,7 +79,7 @@ export async function up({ payload, req: _req, session: _session }: MigrateUpArg
       data: {
         ...service,
         image: placeholderMedia.id as string,
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     })
   }
 
@@ -127,7 +127,7 @@ export async function up({ payload, req: _req, session: _session }: MigrateUpArg
       data: {
         ...hotel,
         image: placeholderMedia.id as string,
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     })
   }
 
@@ -167,7 +167,7 @@ export async function up({ payload, req: _req, session: _session }: MigrateUpArg
       data: {
         ...pkg,
         image: placeholderMedia.id as string,
-      } as any,
+      } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     })
   }
 
