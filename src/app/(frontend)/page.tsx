@@ -1,4 +1,6 @@
 import React from 'react'
+
+export const dynamic = 'force-dynamic'
 import Hero from '@/sections/Hero'
 import About from '@/sections/About'
 import Services from '@/sections/Services'
